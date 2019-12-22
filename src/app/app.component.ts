@@ -27,9 +27,4 @@ export class AppComponent implements OnInit {
             tap( () => this.loading = false )
             );
   }
-
-  /*doSearch(term: string) {
-    this.loading = true;
-    this.results = this.itunes.search(term);
-  }*/
 }
