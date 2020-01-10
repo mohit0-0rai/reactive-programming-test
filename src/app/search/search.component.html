@@ -1,0 +1,23 @@
+<div>
+  <form class="form-inline">
+    <div class="form-group">
+      <input type="search" class="form-control form-control-sm" placeholder="Enter search text" [formControl]="searchField">
+    </div>
+  </form>
+
+  <hr/>
+
+<div class="text-center">
+  <p class="lead" *ngIf="loading">Loading...</p>
+</div>
+
+  <ul class="list-group">
+  <li class="list-group-item"
+      *ngFor="let track of results | async">
+    <img src="{{ track.thumbnail }}">
+    <a target="_blank" class="ml-2"
+       href="{{ track.link }}">{{ track.name }} ( by {{ track.artist }} )
+    </a>
+  </li>
+</ul>
+</div>
