@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { SearchItem } from '../models/search-item.model';
 import { FormControl } from '@angular/forms';
 import { SearchService } from '../services/search.service';
-import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap, switchMap, map } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -13,18 +12,24 @@ import { debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operato
 export class SearchComponent implements OnInit {
 
   private loading = false;
-  private results: Observable<SearchItem[]>;
   private searchField: FormControl;
-  constructor(private itunes: SearchService) { }
+  constructor(private itunes: SearchService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-      this.searchField = new FormControl();
-      this.results = this.searchField.valueChanges
-      .pipe(
+    this.searchField = new FormControl();
+    this.route.paramMap.subscribe( params => {
+      if (params.get('term')) {
+        this.loading = true;
+        this.itunes.search(params.get('term')).subscribe( _ => );
+      }
+    });
+    this.searchField.valueChanges
+        .pipe(
             debounceTime(400),
             distinctUntilChanged(),
-            tap( () => this.loading = true ),
-            switchMap(term => this.itunes.search(term)),
-            tap( () => this.loading = false )
-            );
-  }}
+            map(term => this.router.navigate(['search', { term }])),
+        ).subscribe();
+
+  }
+
+}

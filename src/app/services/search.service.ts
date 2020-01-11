@@ -8,17 +8,15 @@ import { map } from 'rxjs/operators';
 export class SearchService {
   apiRoot = 'https://itunes.apple.com/search';
   results: SearchItem[];
-  loading: boolean;
 
   constructor(private http: HttpClient) {
     this.results = [];
-    this.loading = false;
   }
 
-  search(term: string): Observable<SearchItem[]> {
+  search(term: string): any {
     const apiURL = `${this.apiRoot}?term=${term}&media=music&limit=20`;
-    return this.http.get(apiURL).pipe(map(res => {
-        let results = res['results'].map(item => {
+    this.http.get(apiURL).pipe(map(res => {
+        this.results = res['results'].map(item => {
             return new SearchItem(
                 item['trackName'],
                 item['artistName'],
@@ -27,7 +25,6 @@ export class SearchService {
                 item['artistId']
             );
         });
-        return results;
     }));
   }
 }

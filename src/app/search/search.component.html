@@ -13,7 +13,7 @@
 
   <ul class="list-group">
   <li class="list-group-item"
-      *ngFor="let track of results | async">
+      *ngFor="let track of itunes.results">
     <img src="{{ track.thumbnail }}">
     <a target="_blank" class="ml-2"
        href="{{ track.link }}">{{ track.name }} ( by {{ track.artist }} )
