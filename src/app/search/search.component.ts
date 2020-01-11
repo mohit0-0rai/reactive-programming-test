@@ -20,15 +20,15 @@ export class SearchComponent implements OnInit {
     this.route.paramMap.subscribe( params => {
       if (params.get('term')) {
         this.loading = true;
-        this.itunes.search(params.get('term')).subscribe( _ => );
+        this.itunes.search(params.get('term')).subscribe( _ => this.loading = false );
       }
     });
     this.searchField.valueChanges
-        .pipe(
-            debounceTime(400),
-            distinctUntilChanged(),
-            map(term => this.router.navigate(['search', { term }])),
-        ).subscribe();
+      .pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      map(term => this.router.navigate(['search', { term }])),
+      ).subscribe();
 
   }
 

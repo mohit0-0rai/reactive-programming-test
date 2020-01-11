@@ -15,7 +15,7 @@ export class SearchService {
 
   search(term: string): any {
     const apiURL = `${this.apiRoot}?term=${term}&media=music&limit=20`;
-    this.http.get(apiURL).pipe(map(res => {
+    return this.http.get(apiURL).pipe(map(res => {
         this.results = res['results'].map(item => {
             return new SearchItem(
                 item['trackName'],
