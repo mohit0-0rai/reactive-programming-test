@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-error',
   template: `
-  <div>
-    <h1>Oops!</h1> <br/>
-    <h2>404 not found.</h2>
+  <div class="jumbotron">
+    <h1 class="display-4">Oops!</h1> <br/>
+    <h2 class="display-5">404 not found</h2>
   </div>
   `,
   styles: [`

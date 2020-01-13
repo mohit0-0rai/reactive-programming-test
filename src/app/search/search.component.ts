@@ -20,7 +20,7 @@ export class SearchComponent implements OnInit {
     this.route.paramMap.subscribe( params => {
       if (params.get('term')) {
         this.loading = true;
-        this.itunes.search(params.get('term')).subscribe( _ => this.loading = false );
+        this.itunes.search(params.get('term')).subscribe( () => this.loading = false );
       }
     });
     this.searchField.valueChanges
